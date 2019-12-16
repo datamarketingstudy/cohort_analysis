@@ -1,0 +1,73 @@
+---
+title: "Cohort_with_R"
+author: "GEON SEUNG LEE"
+date: '2019-12-16'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Cohort 분석이란?
+
+
+코호트 분석에서 코호트(Cohort)란 **특정 기간 동안 공통된 특성이나 경험을 갖는 사용자 집단**을 의미하며,  
+쉽게 표현하면 **특정 기간별 사용자 세그먼트**로 이해할 수 있습니다.  
+
+코호트 분석은 웹로그 분석 Tool인 `Google Analytics` 등에서 분석 서비스를 제공하고 있습니다.  
+보통 코호트 단위로 기간 경과에 따른 **고객의 유지율과 이탈율 분석에 주로 활용**되고 있습니다.  
+
+<img src="https://blogfiles.pstatic.net/MjAxOTEwMTVfMTky/MDAxNTcxMTM4NTkwMjg4.HjwluL-apDnrv66GiwxW9Xnv8Bi6JvtoXSAFyGk7avMg.TKf6kMscVqX1duPXF0-tYFCRZCJ0SiRcfkXWPWVs8NMg.PNG.bestinall/%EA%B7%B8%EB%A6%BC3.png" width="50%" height="50%">  
+
+
+
+
+## 예제 Dataset Load
+
+
+예제에 활용될 데이터셋은 `Kaggle`의 `Retail Transaction Data`입니다.  
+하기 링크에서 데이터셋에 관한 자세한 정보를 참고하세요.  
+<https://www.kaggle.com/regivm/retailtransactiondata>  
+
+
+
+```{r, warning=FALSE, message=FALSE}
+library(data.table)
+df_trans <- fread("Retail_Data_Transactions.csv", stringsAsFactors = FALSE)
+df_respo <- fread("Retail_Data_Response.csv", stringsAsFactors = FALSE)
+
+str(df_trans)
+str(df_respo)
+# Convert Data Type
+library(lubridate)
+df_trans$trans_date <- dmy(df_trans$trans_date)
+```
+
+## EDA
+
+
+먼저 간단하게 데이터를 살펴보도록 하겠습니다.  
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+ggplot(data = df_trans, aes(x = tran_amount, y = ..density..)) +
+  geom_histogram(fill = "cornsilk", color = "grey60", size = 0.2) +
+  geom_density() +
+  xlim(0, 105)
+
+ggplot(data = df_trans, aes(x = tran_amount)) +
+  geom_density(fill = "skyblue", size = 0.8, alpha = 0.6) +
+  ggtitle("Density plot of Transaction data") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, family = "serif"))
+```
+
+
+## Cohort Analysis(코호트분석)
+
+
+코호트 분석을 위해 데이터 전처리를 진행합니다.  
+작성중  
+
